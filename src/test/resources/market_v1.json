@@ -1,0 +1,349 @@
+{
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "time": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "payload": {
+      "properties": {
+        "advertising": {
+          "properties": {
+            "advertisingCounty": {
+              "type": "string"
+            },
+            "hasDigitalProductAssortment": {
+              "type": "boolean"
+            },
+            "hasOnlineOffers": {
+              "type": "boolean"
+            },
+            "responsibleCompany": {
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "string"
+                },
+                "zipCode": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "city",
+                "name",
+                "street",
+                "zipCode"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "hasDigitalProductAssortment",
+            "hasOnlineOffers",
+            "responsibleCompany"
+          ],
+          "type": "object"
+        },
+        "category": {
+          "properties": {
+            "isWarehouse": {
+              "type": "boolean"
+            },
+            "marketTypeDisplayName": {
+              "type": "string"
+            },
+            "template": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "isWarehouse",
+            "marketTypeDisplayName",
+            "template",
+            "type"
+          ],
+          "type": "object"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "contact": {
+          "properties": {
+            "city": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "fax": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "zipCode": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "city",
+            "name",
+            "state",
+            "street",
+            "zipCode"
+          ],
+          "type": "object"
+        },
+        "corporation": {
+          "properties": {
+            "accountingArea": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "generalManagers": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "hrbNumber": {
+              "type": "string"
+            },
+            "localCourtCity": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "taxNumber": {
+              "type": "string"
+            },
+            "uinIsoCode": {
+              "type": "string"
+            },
+            "ustId": {
+              "type": "string"
+            },
+            "zipCode": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accountingArea",
+            "city",
+            "country",
+            "generalManagers",
+            "name",
+            "street",
+            "zipCode"
+          ],
+          "type": "object"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "geoLocation": {
+          "properties": {
+            "latitude": {
+              "type": "number"
+            },
+            "longitude": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isAdministrationMarket": {
+          "type": "boolean"
+        },
+        "opening": {
+          "properties": {
+            "finalClosureDate": {
+              "format": "date",
+              "type": "string"
+            },
+            "firstOpeningDate": {
+              "format": "date",
+              "type": "string"
+            },
+            "specialOpeningHours": {
+              "items": {
+                "properties": {
+                  "endDate": {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  "hours": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "format": "date",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "endDate",
+                  "hours",
+                  "startDate"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "temporaryClosedFrom": {
+              "format": "date",
+              "type": "string"
+            },
+            "temporaryClosedUntil": {
+              "format": "date",
+              "type": "string"
+            },
+            "weeklyOpeningHours": {
+              "items": {
+                "properties": {
+                  "dayOfWeek": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "dayOfWeek",
+                  "from",
+                  "to"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "finalClosureDate",
+            "firstOpeningDate",
+            "specialOpeningHours",
+            "weeklyOpeningHours"
+          ],
+          "type": "object"
+        },
+        "operatorChanged": {
+          "type": "boolean"
+        },
+        "operatorChangedDate": {
+          "format": "date",
+          "type": "string"
+        },
+        "regionShort": {
+          "type": "string"
+        },
+        "salesAreaName": {
+          "type": "string"
+        },
+        "services": {
+          "properties": {
+            "concessionaires": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "onlineServices": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "storeServices": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "concessionaires",
+            "onlineServices",
+            "storeServices"
+          ],
+          "type": "object"
+        },
+        "vatId": {
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "wawi": {
+          "type": "string"
+        },
+        "wwIdent": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "wwIdent"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "key",
+    "payload",
+    "time",
+    "type"
+  ],
+  "type": "object"
+}
