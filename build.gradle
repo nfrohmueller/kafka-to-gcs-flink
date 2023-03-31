@@ -10,6 +10,12 @@ plugins {
 group = 'de.rewe'
 version = '1.0-SNAPSHOT'
 
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -17,9 +23,6 @@ repositories {
         mavenContent {
             snapshotsOnly()
         }
-    }
-    maven {
-        url 'https://jitpack.io'
     }
 }
 
@@ -67,6 +70,8 @@ dependencies {
     implementation "org.apache.flink:flink-connector-files:${flinkVersion}"
     implementation "org.apache.flink:flink-json:${flinkVersion}"
     implementation "org.apache.flink:flink-avro:${flinkVersion}"
+    implementation 'com.github.airbytehq:json-avro-converter:1.0.1'
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1"
     implementation 'net.jimblackler.jsonschemafriend:core:0.11.4'
     // --------------------------------------------------------------
     // Dependencies that should be part of the shadow jar, e.g.
@@ -80,6 +85,8 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.8'
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation "org.apache.flink:flink-test-utils:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-table-test-utils:${flinkVersion}"
 }
 
 // make compileOnly dependencies available for tests:

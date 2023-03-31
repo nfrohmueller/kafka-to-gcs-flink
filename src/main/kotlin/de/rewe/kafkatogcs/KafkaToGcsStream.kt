@@ -21,7 +21,8 @@ fun main() {
     val outputPath =
         Path("file:///Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/output")
     val jsonSchemaString = File("/Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/src/test/resources/market_v1.json").readText(Charsets.UTF_8)
-    val typeInformation = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
+//    val typeInformation = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
+    val schema = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
 
     val streamEnv = StreamExecutionEnvironment.getExecutionEnvironment()
     streamEnv.checkpointConfig.checkpointingMode = CheckpointingMode.EXACTLY_ONCE

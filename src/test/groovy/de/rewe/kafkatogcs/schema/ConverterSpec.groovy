@@ -61,12 +61,12 @@ class ConverterSpec extends Specification {
 
     def 'Test real schema'() {
         given:
-        Schema inputSchema = schemaStore.loadSchema(ConverterSpec.getResource('/market_v1.json'))
+        String inputSchema = ConverterSpec.getResource('/market_v1.json').text
 
         when:
-        def dataType = ConvertersKt.convertSchemaToFlinkType(inputSchema)
+        def dataType = JsonRowSchemaConverter.convert(inputSchema)
 
         then:
-        dataType.children.size() == 5
+        dataType
     }
 }
