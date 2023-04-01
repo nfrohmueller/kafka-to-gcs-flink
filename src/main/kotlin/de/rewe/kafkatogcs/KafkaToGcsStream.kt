@@ -1,5 +1,6 @@
 package de.rewe.kafkatogcs
 
+import de.rewe.kafkatogcs.schema.conversion.JsonToAvroSchemaConverter
 import org.apache.flink.api.common.eventtime.WatermarkStrategy
 import org.apache.flink.api.common.serialization.SimpleStringEncoder
 import org.apache.flink.api.common.serialization.SimpleStringSchema
@@ -10,6 +11,7 @@ import org.apache.flink.core.fs.Path
 import org.apache.flink.formats.avro.AvroRowDataSerializationSchema
 import org.apache.flink.formats.json.JsonRowSchemaConverter
 import org.apache.flink.streaming.api.CheckpointingMode
+import org.apache.flink.streaming.api.datastream.DataStream
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.sink.filesystem.BucketAssigner
 import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.DefaultRollingPolicy
@@ -22,7 +24,6 @@ fun main() {
         Path("file:///Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/output")
     val jsonSchemaString = File("/Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/src/test/resources/market_v1.json").readText(Charsets.UTF_8)
 //    val typeInformation = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
-    val schema = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
 
     val streamEnv = StreamExecutionEnvironment.getExecutionEnvironment()
     streamEnv.checkpointConfig.checkpointingMode = CheckpointingMode.EXACTLY_ONCE
@@ -34,7 +35,7 @@ fun main() {
         .setStartingOffsets(OffsetsInitializer.earliest())
         .setValueOnlyDeserializer(SimpleStringSchema())
         .build()
-    val source =
+    val source: DataStream<String> =
         streamEnv.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kafka Source")
 
 
@@ -47,7 +48,7 @@ fun main() {
                 .build()
         ).build()
 
-    source.sinkTo(fileSink)
-//    source.print()
+//    source.sinkTo(fileSink)
+    source.print()
     streamEnv.execute("Kafka Job")
 }

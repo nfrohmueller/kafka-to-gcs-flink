@@ -1,8 +1,7 @@
 /*
  * Copyright (c) 2022 Airbyte, Inc., all rights reserved.
  */
-
-package de.rewe.kafkatogcs.schema.conversion.integrations;
+package de.rewe.kafkatogcs.schema.conversion.integrations
 
 /**
  * When choosing identifiers names in destinations, extended Names can handle more special
@@ -10,11 +9,5 @@ package de.rewe.kafkatogcs.schema.conversion.integrations;
  * This class detects when such special characters are used and adds the appropriate quoting when
  * necessary.
  */
-public class ExtendedNameTransformer extends StandardNameTransformer {
-
-  @Override
-  public String convertStreamName(final String input) {
-    return super.convertStreamName(input);
-  }
-
+abstract class ExtendedNameTransformer : StandardNameTransformer() {
 }
