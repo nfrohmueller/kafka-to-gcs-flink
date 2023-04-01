@@ -1,6 +1,6 @@
 package de.rewe.kafkatogcs.schema.conversion
 
-import de.rewe.kafkatogcs.schema.conversion.integrations.ExtendedNameTransformer
+import de.rewe.kafkatogcs.schema.conversion.commons.Names
 
 /**
  * [AvroNameTransformer] Utility class for correctly handling names in avro.
@@ -11,12 +11,16 @@ import de.rewe.kafkatogcs.schema.conversion.integrations.ExtendedNameTransformer
  *  * Reference: [Avro Specification](https://avro.apache.org/docs/current/spec.html#names)
  *
  */
-class AvroNameTransformer : ExtendedNameTransformer() {
-    override fun convertStreamName(input: String): String {
+class AvroNameTransformer {
+    fun getIdentifier(name: String): String {
+        return convertStreamName(name)
+    }
+
+    private fun convertStreamName(input: String): String {
         if (input.isBlank()) {
             return input
         }
-        val normalizedName = super.convertStreamName(input)
+        val normalizedName = Names.toAlphanumericAndUnderscore(input)
         return if (normalizedName.substring(0, 1).matches("[A-Za-z_]".toRegex())) {
             normalizedName
         } else {
@@ -24,7 +28,7 @@ class AvroNameTransformer : ExtendedNameTransformer() {
         }
     }
 
-    override fun getNamespace(namespace: String): String {
+    fun getNamespace(namespace: String): String {
         val tokens = namespace.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         return tokens.map { name: String? ->
             if (name != null) {

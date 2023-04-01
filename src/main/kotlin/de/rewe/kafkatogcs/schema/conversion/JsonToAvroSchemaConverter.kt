@@ -3,6 +3,7 @@ package de.rewe.kafkatogcs.schema.conversion
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
+import de.rewe.kafkatogcs.schema.conversion.commons.objectMapper
 import org.apache.avro.LogicalTypes
 import org.apache.avro.Schema
 import org.apache.avro.SchemaBuilder
@@ -11,6 +12,13 @@ import org.slf4j.LoggerFactory
 import java.util.Optional
 import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashMap
+
+
+
+fun convertJsonSchemaToAvroSchema(jsonSchemaString: String): org.apache.avro.Schema {
+    val jsonNode = objectMapper.readTree(jsonSchemaString)
+    return JsonToAvroSchemaConverter().getAvroSchema(jsonNode, "record", "")
+}
 
 /**
  * The main function of this class is to convert a JsonSchema to Avro schema. It can also
@@ -50,8 +58,8 @@ class JsonToAvroSchemaConverter {
         addStringToLogicalTypes: Boolean,
         isRootNode: Boolean
     ): Schema {
-        val stdName = AvroConstants.NAME_TRANSFORMER.getIdentifier(fieldName)
-        val stdNamespace = fieldNamespace?.let { AvroConstants.NAME_TRANSFORMER.getNamespace(it) }
+        val stdName = NAME_TRANSFORMER.getIdentifier(fieldName)
+        val stdNamespace = fieldNamespace?.let { NAME_TRANSFORMER.getNamespace(it) }
         val builder = SchemaBuilder.record(stdName)
         if (stdName != fieldName) {
             LOGGER.warn(
@@ -79,7 +87,7 @@ class JsonToAvroSchemaConverter {
             .orElseGet { listOf() }
         val assembler = builder.fields()
         for (subfieldName in subfieldNames) {
-            val stdFieldName = AvroConstants.NAME_TRANSFORMER.getIdentifier(subfieldName)
+            val stdFieldName = NAME_TRANSFORMER.getIdentifier(subfieldName)
             val subfieldDefinition = properties.map { p: JsonNode -> p[subfieldName] }
                 .orElseGet { JsonNodeFactory.instance.missingNode() }
             val fieldBuilder = assembler.name(stdFieldName)
@@ -541,5 +549,8 @@ class JsonToAvroSchemaConverter {
             }
             return fieldSchema
         }
+
     }
+
+
 }

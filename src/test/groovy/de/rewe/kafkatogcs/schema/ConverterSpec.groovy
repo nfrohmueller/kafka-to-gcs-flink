@@ -1,5 +1,7 @@
 package de.rewe.kafkatogcs.schema
 
+import de.rewe.kafkatogcs.schema.conversion.JsonToAvroSchemaConverter
+import de.rewe.kafkatogcs.schema.conversion.JsonToAvroSchemaConverterKt
 import net.jimblackler.jsonschemafriend.Schema
 import net.jimblackler.jsonschemafriend.SchemaStore
 import org.apache.flink.table.types.DataType
@@ -64,7 +66,7 @@ class ConverterSpec extends Specification {
         String inputSchema = ConverterSpec.getResource('/market_v1.json').text
 
         when:
-        def dataType = JsonRowSchemaConverter.convert(inputSchema)
+        def dataType = JsonToAvroSchemaConverterKt.convertJsonSchemaToAvroSchema(inputSchema)
 
         then:
         dataType

@@ -1,10 +1,12 @@
 package de.rewe.kafkatogcs.schema
 
 import de.rewe.kafkatogcs.schema.JsonTypes.*
-import org.apache.flink.table.api.DataTypes
+import de.rewe.kafkatogcs.schema.conversion.JsonToAvroSchemaConverter
+import de.rewe.kafkatogcs.schema.conversion.commons.objectMapper
 import org.apache.flink.table.api.DataTypes.*
 import org.apache.flink.table.api.Schema
 import org.apache.flink.table.types.DataType
+
 
 
 fun convertVertXtoFlinkSchema(vertxSchema: net.jimblackler.jsonschemafriend.Schema): Schema {
