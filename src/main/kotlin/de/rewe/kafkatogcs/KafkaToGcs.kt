@@ -37,7 +37,8 @@ fun main() {
     val kafkaSource = TableDescriptor.forConnector("kafka")
         .schema(inputSchema)
         .option("topic", "market_v1")
-        .option("properties.bootstrap.servers", "bootstrap.bd-int.kafka.rewe.cloud:9094")
+        .option("properties.bootstrap.servers", "localhost:9092")
+//        .option("properties.bootstrap.servers", "bootstrap.bd-int.kafka.rewe.cloud:9094")
         .option("scan.startup.mode", "earliest-offset")
         .option("value.format", "json")
         .option("value.json.timestamp-format.standard", "ISO-8601")
@@ -80,7 +81,8 @@ fun main() {
 
     val transformed = tableEnv.fromDataStream(tableEnv.toDataStream(table).map { row: Row -> row })
 
+    table.printSchema()
 //    table.executeInsert(printTableName)
-    transformed.executeInsert(fileSink)
+//    transformed.executeInsert(fileSink)
 }
 

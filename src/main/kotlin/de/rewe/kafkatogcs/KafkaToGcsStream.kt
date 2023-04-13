@@ -7,6 +7,7 @@ import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.connector.file.sink.FileSink
 import org.apache.flink.connector.kafka.source.KafkaSource
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer
+import org.apache.flink.connector.kafka.source.reader.deserializer.KafkaRecordDeserializationSchema
 import org.apache.flink.core.fs.Path
 import org.apache.flink.formats.avro.AvroRowDataSerializationSchema
 import org.apache.flink.formats.json.JsonRowSchemaConverter
@@ -15,6 +16,7 @@ import org.apache.flink.streaming.api.datastream.DataStream
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.sink.filesystem.BucketAssigner
 import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.DefaultRollingPolicy
+import tech.allegro.schema.json2avro.converter.JsonAvroConverter
 import java.io.File
 import java.time.Duration
 
@@ -22,7 +24,7 @@ fun main() {
 
     val outputPath =
         Path("file:///Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/output")
-    val jsonSchemaString = File("/Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/src/test/resources/market_v1.json").readText(Charsets.UTF_8)
+    val jsonSchemaString = File("file:///Users/nilsfrohmuller/projects/architecture/analytics/kafka-to-gcs-flink/src/test/resources/market_v1.json").readText(Charsets.UTF_8)
 //    val typeInformation = JsonRowSchemaConverter.convert<String>(jsonSchemaString)
 
     val streamEnv = StreamExecutionEnvironment.getExecutionEnvironment()
@@ -30,7 +32,8 @@ fun main() {
     streamEnv.checkpointConfig.checkpointInterval = 1000L
 
     val kafkaSource = KafkaSource.builder<String>()
-        .setBootstrapServers("bootstrap.bd-int.kafka.rewe.cloud:9094")
+//        .setBootstrapServers("bootstrap.bd-int.kafka.rewe.cloud:9094")
+        .setBootstrapServers("localhost:9092")
         .setTopics("market_v1")
         .setStartingOffsets(OffsetsInitializer.earliest())
         .setValueOnlyDeserializer(SimpleStringSchema())
