@@ -35,6 +35,7 @@ ext {
     scalaBinaryVersion = '_2.12'
     slf4jVersion = '1.7.36'
     log4jVersion = '2.18.0'
+    confluentVersion = '7.2.2'
 }
 
 sourceCompatibility = javaVersion
@@ -73,9 +74,12 @@ dependencies {
     implementation "org.apache.flink:flink-connector-files:${flinkVersion}"
     implementation "org.apache.flink:flink-json:${flinkVersion}"
     implementation "org.apache.flink:flink-avro:${flinkVersion}"
+    implementation "org.apache.flink:flink-avro-confluent-registry:${flinkVersion}"
+    implementation "io.confluent:kafka-avro-serializer:$confluentVersion"
     implementation group: 'tech.allegro.schema.json2avro', name: 'converter', version: '0.2.15'
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1"
     implementation 'net.jimblackler.jsonschemafriend:core:0.11.4'
+    implementation 'com.sksamuel.hoplite:hoplite-yaml:2.7.3'
     // --------------------------------------------------------------
     // Dependencies that should be part of the shadow jar, e.g.
     // connectors. These must be in the flinkShadowJar configuration!

@@ -1,0 +1,6 @@
+applicationName: "IcebergTransformer"
+
+kafka:
+  bootstrapServers: "kafka-bootstrap:9092"
+  topic: "market_v1_avro"
+  schemaRegistry: "http://confluent-platform-schemaregistry:8081"
