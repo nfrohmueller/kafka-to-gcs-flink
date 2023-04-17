@@ -9,7 +9,6 @@ import org.apache.avro.Schema
 import org.apache.avro.generic.GenericRecord
 import org.apache.flink.api.common.eventtime.WatermarkStrategy
 import org.apache.flink.api.common.serialization.SimpleStringEncoder
-import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.connector.file.sink.FileSink
 import org.apache.flink.connector.kafka.source.KafkaSource
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer
@@ -20,9 +19,7 @@ import org.apache.flink.streaming.api.datastream.DataStream
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.DefaultRollingPolicy
 import org.apache.kafka.clients.CommonClientConfigs
-import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.config.SaslConfigs
-import org.apache.kafka.common.config.SecurityConfig
 import org.slf4j.LoggerFactory
 import java.time.Duration
 
@@ -55,7 +52,7 @@ fun main() {
         .setTopics(config.kafka.topic)
         .setProperty(SaslConfigs.SASL_MECHANISM, "PLAIN")
         .setProperty(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT")
-        .setProperty(SaslConfigs.SASL_JAAS_CONFIG, "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"nils.frohmueller\" password=\"ujBsje6BSnVJl3CcPM87\";")
+        .setProperty(SaslConfigs.SASL_JAAS_CONFIG, """org.apache.kafka.common.security.plain.PlainLoginModule required username="${config.kafka.username}" password="${config.kafka.password}";""")
         .setStartingOffsets(OffsetsInitializer.earliest())
         .setValueOnlyDeserializer(ConfluentRegistryAvroDeserializationSchema.forGeneric(schema, config.kafka.schemaRegistry))
 //        .setValueOnlyDeserializer(SimpleStringSchema())
@@ -92,5 +89,7 @@ data class ApplicationConfig (
 data class KafkaConfig(
     val bootstrapServers: String,
     val topic: String,
-    val schemaRegistry: String
+    val schemaRegistry: String,
+    val username: String,
+    val password: String
 )

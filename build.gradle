@@ -76,6 +76,7 @@ dependencies {
     implementation "org.apache.flink:flink-avro:${flinkVersion}"
     implementation "org.apache.flink:flink-avro-confluent-registry:${flinkVersion}"
     implementation "io.confluent:kafka-avro-serializer:$confluentVersion"
+    implementation 'org.apache.iceberg:iceberg-flink-runtime-1.16:1.2.1'
     implementation group: 'tech.allegro.schema.json2avro', name: 'converter', version: '0.2.15'
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1"
     implementation 'net.jimblackler.jsonschemafriend:core:0.11.4'
